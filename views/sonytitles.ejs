@@ -1,0 +1,10 @@
+<h1>sonytitles.ejs</h1>
+
+
+<% titles.forEach(function(title){ %>
+    <div>
+        <h4><%= title.name %></h4>
+        <img src="<% title.image %>">
+    </div>
+
+<% }); %>
