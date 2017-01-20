@@ -1,16 +1,54 @@
 <% include partials/header.ejs %>
+<!-- -->
+
+<div class="container">
+    <h4>sonytitles.ejs</h4>
+</div>
 
 
-<h1>sonytitles.ejs</h1>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h2>Titles</h2>
+            <p>Select Titles that I have programmed.</p>
+            <p>
+                <a class="btn btn-primary" href="/sonytitles/new">Add New Title</a>
+            </p>
+        </div>
+    </header>
 
 
-<% titles.forEach(function(title){ %>
-    <div>
-        <h4><%= title.name %></h4>
-        <img src="<% title.image %>">
+
+    <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+        <% titles.forEach(function(title){ %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= title.image %>">
+
+                    <div class="caption">
+                        <h4><%= title.name %></h4>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
     </div>
 
-<% }); %>
+
+
+    <a class="btn btn-primary" href="/sonytitles">Back</a>
+
+</div> <!-- end class="container" -->
+
+
+
+
+
+
+
+
+
+
+
 
 
 <% include partials/footer.ejs %>
