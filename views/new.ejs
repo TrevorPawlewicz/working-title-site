@@ -1,14 +1,30 @@
 <% include partials/header.ejs %>
 
 
-<h1>new.ejs</h1>
+<h4>new.ejs</h4>
 
+<div id="titles-new" class="container">
+    <div class="row">
+        <h1 class="h1-center">Add a new title</h1>
 
-<form action="/sonytitles" method="POST">
-    <input type="text" name="name" placeholder="name">
-    <input type="text" name="image" placeholder="image url">
-    <button>Submit</button>
-</form>
+        <div class="header-width-30">
+            <form action="/sonytitles" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="name">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="image" placeholder="image url">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default btn-primary btn-block">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <a href="/sonytitles" class="btn btn-xs btn-info">Go Back</a>
+    </div>
+</div>
+
 
 
 
