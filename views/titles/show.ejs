@@ -1,0 +1,48 @@
+<% include ../partials/header.ejs %>
+
+
+<h4>show.ejs</h4>
+
+
+<div class="container">
+    <!-- side bar begin -->
+    <%# <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <li class="list-group-item active">Info 01</li>
+                <li class="list-group-item">Info 02</li>
+                <li class="list-group-item">Info 03</li>
+            </div>
+        </div>%>
+        <!-- side bar end -->
+
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= title.image%>"/>
+                <div class="caption-full">
+                    <h3><a><%= title.name %></a></h3>
+                    <p><%= title.description %></p>
+                </div>
+            </div>
+
+            <div class="well">
+                <a href="/title" class="btn btn-primary">
+                    Back to Bars
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<% include ../partials/footer.ejs %>

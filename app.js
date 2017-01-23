@@ -13,7 +13,7 @@ seedDB();
 mongoose.connect("mongodb://localhost/my_titles");
 app.use(bodyParser.urlencoded({extended: true}));
 //app.set("view engine", "ejs"); // only needed to leave .ejs from res.render
-// __dirname is the directory the app.js live in
+// __dirname is the directory the app.js lives in
 app.use(express.static(__dirname + "/public")); //points Express to public folder
 
 
@@ -32,7 +32,7 @@ app.get("/sonytitles", function(req, res){
             console.log(err);
         } else {
             //         "path", {our name for data: data being passed to page}
-            res.render("index.ejs", {titles: allTitles});
+            res.render("titles/index.ejs", {titles: allTitles});
         }
     });
 });
@@ -57,7 +57,7 @@ app.post("/sonytitles", function(req, res){
 
 // NEW - show form to create a new title -------------------------------------
 app.get("/sonytitles/new", function(req, res){
-    res.render("new.ejs");
+    res.render("titles/new.ejs");
 });
 
 // SHOW - find one title by ID -----------------------------------------------
@@ -67,7 +67,7 @@ app.get("/sonytitles/:id", function(req, res){
             console.log(err);
         } else {
             console.log(foundTitle);
-            res.render("show.ejs", {title: foundTitle});
+            res.render("titles/show.ejs", {title: foundTitle});
         }
     });
 });
