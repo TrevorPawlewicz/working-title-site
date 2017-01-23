@@ -2,13 +2,23 @@ var express    = require('express');
 var app        = express();
 var bodyParser = require("body-parser"); // to get form data (req.body.name)
 var mongoose   = require("mongoose"); // object data mapper for MongoDB
+//var flash          = require("connect-flash"); // messages
+var passport       = require("passport"); // authentication
+var LocalStrategy  = require("passport-local"); // authentication
 
+
+//  SCHEMAS               ./ = current directory
 var Title      = require("./models/title.js"); // import model module
 // var Comment   = require("./models/comment.js"); // import model module
-// var User      = require("./models/user.js"); // import model module
+var User      = require("./models/user.js"); // import model module
 
 var seedDB = require("./seeds.js");
 seedDB();
+
+// ROUTES - require the files, then app.use them below
+// var commentRoutes = require("./routes/comments.js"),
+//     barRoutes     = require("./routes/bars.js"),
+//     indexRoutes   = require("./routes/index.js"); // AUTHENTICATION
 
 mongoose.connect("mongodb://localhost/my_titles");
 app.use(bodyParser.urlencoded({extended: true}));
