@@ -3,6 +3,10 @@ var app        = express();
 var bodyParser = require("body-parser"); // to get form data (req.body.name)
 var mongoose   = require("mongoose"); // object data mapper for MongoDB
 
+var Title      = require("./models/titles.js"); // import model module
+// var Comments   = require("./models/comments.js"); // import model module
+// var Users      = require("./models/user.js"); // import model module
+
 mongoose.connect("mongodb://localhost/my_titles");
 app.use(bodyParser.urlencoded({extended: true}));
 //app.set("view engine", "ejs"); // only needed to leave .ejs from res.render
@@ -11,14 +15,7 @@ app.get("/", function(req, res){
     res.render("landing.ejs");
 });
 
-// SCHEMA SETUP
-var titleSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-// compile schema into a model (adds methods to use with MongoDB)
-var Title = mongoose.model("Title", titleSchema);
+
 
 //------------------------ ROUTES --------------------------------------------
 // get rout retrieves data
