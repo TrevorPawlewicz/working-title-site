@@ -1,0 +1,28 @@
+<% include partials/header.ejs %>
+<!-- -->
+<h4>show.ejs</h4>
+
+
+<h1><%= title.name %></h1>
+
+<img src="<%= title.image %>">
+<p><%= title.description %></p>
+
+<%# title.comments comes from the Title Schema %>
+<% title.comments.forEach(function(comment){ %>
+    <p>
+        <strong><%= comment.author %></strong> - <%= comment.text %>
+    </p>
+<% }) %>
+
+
+
+
+
+
+
+
+
+
+
+<% include partials/footer.ejs %>

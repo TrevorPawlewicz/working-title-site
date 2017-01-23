@@ -4,7 +4,7 @@
 
 
 <div class="container">
-    <h4>sonytitles.ejs</h4>
+    <h4>index.ejs (sonytitles)</h4>
 </div>
 
 
@@ -30,6 +30,12 @@
                     <div class="caption">
                         <h4><%= title.name %></h4>
                     </div>
+
+                    <p>
+                        <a href="/sonytitles/<%= title._id %>" class="btn btn-primary">
+                            More Info
+                        </a>
+                    </p>
                 </div>
             </div>
         <% }); %>

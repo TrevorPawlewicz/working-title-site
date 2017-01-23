@@ -5,9 +5,15 @@ var mongoose = require("mongoose");
 var titleSchema = new mongoose.Schema({
     name: String,
     image: String,
-    description: String
+    description: String,
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
 });
 
 
 // compile schema into a model (adds methods to use with MongoDB)
-module.exports = mongoose.model("Title", titleSchema);
+module.exports = mongoose.model("Title", titleSchema); // export

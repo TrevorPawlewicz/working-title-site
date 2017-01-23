@@ -3,22 +3,28 @@ var app        = express();
 var bodyParser = require("body-parser"); // to get form data (req.body.name)
 var mongoose   = require("mongoose"); // object data mapper for MongoDB
 
-var Title      = require("./models/titles.js"); // import model module
-// var Comments   = require("./models/comments.js"); // import model module
-// var Users      = require("./models/user.js"); // import model module
+var Title      = require("./models/title.js"); // import model module
+// var Comment   = require("./models/comment.js"); // import model module
+// var User      = require("./models/user.js"); // import model module
+
+var seedDB = require("./seeds.js");
+seedDB();
 
 mongoose.connect("mongodb://localhost/my_titles");
 app.use(bodyParser.urlencoded({extended: true}));
 //app.set("view engine", "ejs"); // only needed to leave .ejs from res.render
+// __dirname is the directory the app.js live in
+app.use(express.static(__dirname + "/public")); //points Express to public folder
 
-app.get("/", function(req, res){
-    res.render("landing.ejs");
-});
 
 
 
 //------------------------ ROUTES --------------------------------------------
-// get rout retrieves data
+app.get("/", function(req, res){
+    res.render("landing.ejs");
+});
+
+// get route retrieves data
 app.get("/sonytitles", function(req, res){
     // get all titles from DB:
     Title.find({}, function(err, allTitles){
@@ -26,7 +32,7 @@ app.get("/sonytitles", function(req, res){
             console.log(err);
         } else {
             //         "path", {our name for data: data being passed to page}
-            res.render("sonytitles.ejs", {titles: allTitles});
+            res.render("index.ejs", {titles: allTitles});
         }
     });
 });
@@ -36,7 +42,8 @@ app.post("/sonytitles", function(req, res){
     // get data from ejs page:
     var name = req.body.name;
     var image = req.body.image;
-    var newTitle = {name: name, image: image};
+    var desc = req.body.description;
+    var newTitle = {name: name, image: image, description: desc};
 
     // create a new title and save to DB:
     Title.create(newTitle, function(err, newlyCreated){
@@ -55,7 +62,14 @@ app.get("/sonytitles/new", function(req, res){
 
 // SHOW - find one title by ID -----------------------------------------------
 app.get("/sonytitles/:id", function(req, res){
-
+    Title.findById(req.params.id).populate("titles").exec(function(err, foundTitle){
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(foundTitle);
+            res.render("show.ejs", {title: foundTitle});
+        }
+    });
 });
 
 
