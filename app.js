@@ -7,9 +7,9 @@ var passport       = require("passport"); // authentication
 var LocalStrategy  = require("passport-local"); // authentication
 
 
-//  SCHEMAS               ./ = current directory
-var Title      = require("./models/title.js"); // import model module
-// var Comment   = require("./models/comment.js"); // import model module
+//  SCHEMAS              ./ = current directory
+var Title     = require("./models/title.js"); // import model module
+var Comment   = require("./models/comment.js"); // import model module
 var User      = require("./models/user.js"); // import model module
 
 var seedDB = require("./seeds.js");
@@ -27,6 +27,19 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public")); //points Express to public folder
 
 
+
+// PASSPORT Config: -----------------------------------------------------------
+app.use(require("express-session")({
+    secret: "Everybody wants some!",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate())); //passport-local-mongoose
+passport.serializeUser(User.serializeUser());         //passport-local-mongoose
+passport.deserializeUser(User.deserializeUser());     //passport-local-mongoose
+//-----------------------------------------------------------------------------
 
 
 //------------------------ ROUTES --------------------------------------------
@@ -83,10 +96,27 @@ app.get("/sonytitles/:id", function(req, res){
 });
 
 
+// AUTHENTICATION routes -----------------------------------------------------
+// show register form:
+app.get('/register', function(req, res){
+    res.render('register.ejs');
+});
 
+// handle sign-up logic
+app.post('/register', function(req, res){
+    var newUser = new User({username: req.body.username}); // username from FORM
+    User.register(newUser, req.body.password, function(err, user){
+        if (err) {
+            console.log(err);
+            return res.render("register.ejs");
+        }
+        passport.authenticate("local")(req, res, function(){
+            res.redirect("/sonytitles");
+        })
+    });
+});
 
-
-
+//----------------------------------------------------------------------------
 
 
 

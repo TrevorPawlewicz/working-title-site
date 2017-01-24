@@ -22,12 +22,27 @@
                 <div class="caption-full">
                     <h3><a><%= title.name %></a></h3>
                     <p><%= title.description %></p>
+
+                    <p>Submitted by
+                        <strong><em><%= title.author.username %></em></strong>
+                        <span class="pull-right"><%= title.date %></span>
+                    </p>
+
+                    <!-- ___________EDIT and DELETE buttons________________ 
+                    <% if (currentUser && title.author.id.equals(currentUser._id)) { %>
+                        <a href="/sonytitles/<%= title.id %>/edit" class="btn btn-warning btn-sm">Edit</a>
+
+                        <form id="delete-form" action="/bars/<%= title._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    <% } %>
+                    <!-- ___________EDIT and DELETE buttons________________ -->
                 </div>
             </div>
 
             <div class="well">
                 <a href="/title" class="btn btn-primary">
-                    Back to Bars
+                    Back
                 </a>
             </div>
 
