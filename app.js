@@ -30,7 +30,7 @@ app.use(express.static(__dirname + "/public")); //points Express to public folde
 
 // PASSPORT Config: -----------------------------------------------------------
 app.use(require("express-session")({
-    secret: "Everybody wants some!",
+    secret: "Dream another dream!",
     resave: false,
     saveUninitialized: false
 }));
