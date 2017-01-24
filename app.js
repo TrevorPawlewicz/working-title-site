@@ -13,7 +13,7 @@ var Comment   = require("./models/comment.js"); // import model module
 var User      = require("./models/user.js"); // import model module
 
 var seedDB = require("./seeds.js");
-seedDB();
+//seedDB();
 
 // ROUTES - require the files, then app.use them below
 var commentRoutes = require("./routes/comments.js"),

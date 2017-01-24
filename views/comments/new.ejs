@@ -1,0 +1,32 @@
+<% include ../partials/header %>
+<!-- _________________comments/new.ejs_____________________________________ -->
+
+<!-- <h1>Comments - new.ejs</h1> -->
+
+<div id="comments-new" class="container">
+    <div class="row">
+        <h1 class="h1-center">Add new comment to <%= title.name %></h1>
+
+        <div class="header-width-30">
+            <form action="/sonytitles/<%= title._id %>/comments" method="POST">
+
+                <div class="form-group">
+                    <input class="form-control" type="text" name="comment[text]" placeholder="text">
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block">Submit</button>
+                </div>
+
+            </form>
+
+            <a href="/sonytitles" class="btn btn-xs btn-warning">Go Back</a>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- ______________________________________________________________________ -->
+<% include ../partials/footer %>

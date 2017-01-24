@@ -28,7 +28,7 @@
                         <span class="pull-right"><%= title.date %></span>
                     </p>
 
-                    <!-- ___________EDIT and DELETE buttons________________ 
+                    <!-- ___________EDIT and DELETE buttons________________
                     <% if (currentUser && title.author.id.equals(currentUser._id)) { %>
                         <a href="/sonytitles/<%= title.id %>/edit" class="btn btn-warning btn-sm">Edit</a>
 
@@ -44,7 +44,45 @@
                 <a href="/title" class="btn btn-primary">
                     Back
                 </a>
-            </div>
+
+                <div class="pull-right">
+                    <a href="/sonytitles/<%= title._id %>/comments/new" class="btn btn-success">
+                        Add New Comment
+                    </a>
+                </div>
+
+
+                <hr>
+
+
+                
+                <!-- _____________________comments start___________________ -->
+                <% bar.comments.forEach(function(comment){ %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="pull-right"><%= comment.date %></span>
+                            <p>
+                                <%= comment.text %>
+                            </p>
+
+                            <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
+                                <a class="btn btn-warning btn-xs"
+                                    href="/sonytitles/<%= title._id %>/comments/<%= comment._id%>/edit">
+                                    Edit
+                                </a>
+
+                                <form id="delete-form" action="/sonytitles/<%= title._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                                    <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                                </form>
+                            <% } %>
+                            <hr>
+                        </div>
+                    </div>
+                <% }); %>
+                <!-- ____________________comments end______________________ -->
+
+            </div> <!-- end well -->
 
         </div>
     </div>

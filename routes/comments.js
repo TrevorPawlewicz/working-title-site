@@ -34,8 +34,8 @@ router.post("/sonytitles/:id/comments", middleware.isLoggedIn, function(req, res
                     console.log(err);
                 } else {
                     // date created (with moment.js):
-                    var commentDate = moment().format("MMMM Do YYYY, h:mm a");
-                    comment.date = commentDate;
+                    //var commentDate = moment().format("MMMM Do YYYY, h:mm a");
+                    //comment.date = commentDate;
 
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
