@@ -30,7 +30,7 @@ router.post("/register", function(req, res){
         } else {
             passport.authenticate("local")(req, res, function(){
                 req.flash("success", "Welcome " + newUser.username + "!");
-                res.redirect("/sonytitles");
+                res.redirect("/titles");
             });
         }
     });
@@ -46,7 +46,7 @@ router.get("/login", function(req, res){
 // handle (POST) Login with "passport-local-mongoose" MIDDLEWARE:
 router.post("/login", passport.authenticate("local",
     {   // user is assumed to exist
-        successRedirect: "/sonytitles",
+        successRedirect: "/titles",
         failureRedirect: "/login",
         failureFlash: true
     }),
@@ -62,7 +62,7 @@ router.get("/logout", function(req, res){
     req.logout();
     req.flash("success", "Logged You Out!");
     //res.redirect("/");
-    res.redirect("/sonytitles");
+    res.redirect("/titles");
 }); //------------------------------------------------------------------------
 
 

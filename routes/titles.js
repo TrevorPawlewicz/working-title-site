@@ -3,7 +3,7 @@ var express    = require("express");
 var router     = express.Router(); // new instance of express Router
 var Title      = require("../models/title.js"); // import model module
 var middleware = require("../middleware/middleware.js"); // include our MIDDLEWARE
-//var moment     = require("moment"); // for time & date display
+var moment     = require("moment"); // for time & date display
 //var multer     = require("multer"); // file image upload
 //var imageUpload = multer({dest: "./public/images/uploads"});
 
@@ -16,7 +16,7 @@ router.get("/", function(req, res){
             console.log(err);
         } else {
             //                       {name we give it: data passed in}
-            res.render("sonytitles/index.ejs", { bars: allTitlesFound });
+            res.render("titles/index.ejs", { titles: allTitlesFound });
         }
     });
 }); //-------------------------------------------------------------------------
@@ -52,7 +52,7 @@ router.get("/", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            res.redirect("/sonytitles"); // to GET '/bars' route
+            res.redirect("/titles"); // to GET '/bars' route
         }
     });
 }); //-------------------------------------------------------------------------
@@ -60,57 +60,57 @@ router.get("/", function(req, res){
 
 // NEW: show the form to create a new bar
 router.get("/new", middleware.isLoggedIn, function(req, res){
-    res.render("sonytitles/new.ejs");
+    res.render("titles/new.ejs");
 }); //-------------------------------------------------------------------------
 
 // SHOW: info of bar by ID
 router.get("/:id", function(req, res){
     // find bar witgh ID:
-    Title.findById(req.params.id).populate("comments").exec(function(err, foundBar){
+    Title.findById(req.params.id).populate("comments").exec(function(err, foundTitle){
         if (err) {
             console.log(err);
         } else {
             // render show template with that bar data:
-            res.render("sonytitles/show.ejs", {bar: foundBar});
+            res.render("titles/show.ejs", {title: foundTitle});
         }
     });
 }); //-------------------------------------------------------------------------
 
 
 // EDIT by ID
-router.get("/:id/edit", middleware.checkBarOwnership, function(req, res){
+router.get("/:id/edit", middleware.checkTitleOwnership, function(req, res){
     // checkBarOwnership MIDDLEWARE is checked THEN:
     Title.findById(req.params.id, function(err, foundTitle){
         if (err) {
             req.flash('error', 'Cannot Find Specified Item!');
         } else {
-            res.render("sonytitles/edit.ejs", { title: foundTitle });
+            res.render("titles/edit.ejs", { title: foundTitle });
         }
     });
 }); //-------------------------------------------------------------------------
 
 // UPDATE by ID
-router.put("/:id", middleware.checkBarOwnership, function(req, res){
+router.put("/:id", middleware.checkTitleOwnership, function(req, res){
     Title.findByIdAndUpdate(req.params.id, req.body.bar, function(err, foundTitle){
         if (err) {
             console.log(err);
-            res.redirect("/sonytitles");
+            res.redirect("/titles");
         } else {
-            req.flash("success", "Bar Updated!!");
-            res.redirect("/sonytitles/" + req.params.id);
+            req.flash("success", "title Updated!!");
+            res.redirect("/titles/" + req.params.id);
         }
     });
 }); //-------------------------------------------------------------------------
 
 // DESTROY by ID
-router.delete("/:id", middleware.checkBarOwnership, function(req, res){
+router.delete("/:id", middleware.checkTitleOwnership, function(req, res){
     Title.findByIdAndRemove(req.params.id, function(err){
         if (err) {
             console.log(err);
-            res.redirect("/sonytitles");
+            res.redirect("/titles");
         } else {
             req.flash("success", "Title Deleted!");
-            res.redirect("/sonytitles");
+            res.redirect("/titles");
         }
     });
 }); //-------------------------------------------------------------------------

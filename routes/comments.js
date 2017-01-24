@@ -9,7 +9,7 @@ var middleware = require("../middleware/middleware.js"); // include our MIDDLEWA
 // COMMENT ROUTES
 //---------------
 // NEW (GET)                                  MIDDLEWARE
-router.get("/sonytitles/:id/comments/new", middleware.isLoggedIn, function(req, res){
+router.get("/titles/:id/comments/new", middleware.isLoggedIn, function(req, res){
     Bar.findById(req.params.id, function(err, title){
         if (err) {
             console.log(err);
@@ -22,11 +22,11 @@ router.get("/sonytitles/:id/comments/new", middleware.isLoggedIn, function(req, 
 
 
 // CREATE (POST) comment                    MIDDLEWARE
-router.post("/sonytitles/:id/comments", middleware.isLoggedIn, function(req, res){
+router.post("/titles/:id/comments", middleware.isLoggedIn, function(req, res){
     Title.findById(req.params.id, function(err, title){
         if (err) {
             console.log(err);
-            res.redirect("/sonytitles");
+            res.redirect("/titles");
         } else {
             Comment.create(req.body.comment, function(err, comment){
                 if (err) {
@@ -43,7 +43,7 @@ router.post("/sonytitles/:id/comments", middleware.isLoggedIn, function(req, res
                     title.comments.push(comment);
                     title.save();
                     console.log("---> comment = " + comment);
-                    res.redirect("/sonytitles/" + title._id);
+                    res.redirect("/titles/" + title._id);
                 }
             });
         }
@@ -52,7 +52,7 @@ router.post("/sonytitles/:id/comments", middleware.isLoggedIn, function(req, res
 
 
 // EDIT comment by Id
-router.get("/sonytitles/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
+router.get("/titles/:id/comments/:comment_id/edit", middleware.checkCommentOwnership, function(req, res){
     Comment.findById(req.params.comment_id, function(err, foundComment){
         if (err) {
             res.redirect("back");
@@ -64,27 +64,27 @@ router.get("/sonytitles/:id/comments/:comment_id/edit", middleware.checkCommentO
 
 
 // UPDATE comment
-router.put("/sonytitles/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
+router.put("/titles/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
 
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
         if (err) {
             res.redirect("back");
         } else {
             //req.flash("success", "Comment Updated!");
-            res.redirect("/sonytitles/" + req.params.id);
+            res.redirect("/titles/" + req.params.id);
         }
     });
 }); //-------------------------------------------------------------------------
 
 
 // DELETE comment
-router.delete("/sonytitles/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
+router.delete("/titles/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
     Comment.findByIdAndRemove(req.params.comment_id, function(err){
         if (err) {
             res.redirect("back");
         } else {
             //req.flash("success", "Comment Deleted!");
-            res.redirect("/sonytitles/" + req.params.id);
+            res.redirect("/titles/" + req.params.id);
         }
     });
 }); //-------------------------------------------------------------------------

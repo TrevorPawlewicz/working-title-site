@@ -14,7 +14,7 @@ middlewareObject.isLoggedIn = function(req, res, next) {
 }; //--------------------------------------------------------------------------
 
 
-middlewareObject.checkBarOwnership = function(req, res, next) {
+middlewareObject.checkTitleOwnership = function(req, res, next) {
     // is user logged in?
     if (req.isAuthenticated()) {
         Bar.findById(req.params.id, function(err, foundBar){
