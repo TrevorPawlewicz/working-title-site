@@ -41,6 +41,11 @@ passport.serializeUser(User.serializeUser());         //passport-local-mongoose
 passport.deserializeUser(User.deserializeUser());     //passport-local-mongoose
 //-----------------------------------------------------------------------------
 
+// MIDDLEWARE to let user data into ALL routes
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
 
 //------------------------ ROUTES --------------------------------------------
 app.get("/", function(req, res){
@@ -56,7 +61,10 @@ app.get("/sonytitles", function(req, res){
             console.log(err);
         } else {
             //         "path", {our name for data: data being passed to page}
-            res.render("titles/index.ejs", {titles: allTitles, currentUser: req.user});
+            res.render("titles/index.ejs", {
+                titles: allTitles,
+                currentUser: req.user // req.user is made by PASSPORT
+            });
         }
     });
 });
