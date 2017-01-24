@@ -49,13 +49,14 @@ app.get("/", function(req, res){
 
 // get route retrieves data
 app.get("/sonytitles", function(req, res){
+    console.log(req.user);
     // get all titles from DB:
     Title.find({}, function(err, allTitles){
         if (err) {
             console.log(err);
         } else {
             //         "path", {our name for data: data being passed to page}
-            res.render("titles/index.ejs", {titles: allTitles});
+            res.render("titles/index.ejs", {titles: allTitles, currentUser: req.user});
         }
     });
 });
@@ -96,13 +97,24 @@ app.get("/sonytitles/:id", function(req, res){
 });
 
 
-// AUTHENTICATION routes -----------------------------------------------------
-// show register form:
+// AUTHENTICATION routes ======================================================
+
+// MIDDLEWARE function
+isLoggedIn = function(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    //  flash( key,      value) to be passed
+    //req.flash("error", "You Need To Be Logged In To Do That!");
+    res.redirect("/login");
+}; //--------------------------------------------------------------------------
+
+// SHOW (GET) the form
 app.get('/register', function(req, res){
     res.render('register.ejs');
-});
+}); //-------------------------------------------------------------------------
 
-// handle sign-up logic
+// handle (POST) Sign Up logic:
 app.post('/register', function(req, res){
     var newUser = new User({username: req.body.username}); // username from FORM
     User.register(newUser, req.body.password, function(err, user){
@@ -114,9 +126,36 @@ app.post('/register', function(req, res){
             res.redirect("/sonytitles");
         })
     });
-});
+}); //-------------------------------------------------------------------------
 
-//----------------------------------------------------------------------------
+// SHOW (GET) Login form:
+app.get("/login", function(req, res){
+    res.render("login.ejs");
+}); //-------------------------------------------------------------------------
+
+// handle (POST) Login with "passport-local-mongoose" MIDDLEWARE:
+app.post("/login", passport.authenticate("local",
+    {   // user is assumed to exist
+        successRedirect: "/sonytitles",
+        failureRedirect: "/login",
+        failureFlash: true
+    }),
+    function(req, res){
+        // not really needed
+        console.log("something really went wrong :(");
+    }
+); //------------------------------------------------------------------------
+
+
+// (GET) Logout logic
+app.get("/logout", function(req, res){
+    req.logout();
+    //req.flash("success", "Logged You Out!");
+    //res.redirect("/");
+    res.redirect("/sonytitles");
+}); //------------------------------------------------------------------------
+
+//=============================================================================
 
 
 
