@@ -16,9 +16,9 @@ var seedDB = require("./seeds.js");
 seedDB();
 
 // ROUTES - require the files, then app.use them below
-// var commentRoutes = require("./routes/comments.js"),
-//     barRoutes     = require("./routes/bars.js"),
-//     indexRoutes   = require("./routes/index.js"); // AUTHENTICATION
+var commentRoutes = require("./routes/comments.js"),
+    titleRoutes   = require("./routes/titles.js"),
+    indexRoutes   = require("./routes/index.js"); // AUTHENTICATION
 
 mongoose.connect("mongodb://localhost/my_titles");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -41,12 +41,23 @@ passport.serializeUser(User.serializeUser());         //passport-local-mongoose
 passport.deserializeUser(User.deserializeUser());     //passport-local-mongoose
 //-----------------------------------------------------------------------------
 
-// MIDDLEWARE to let user data into ALL routes
+
+// our MIDDLEWARE for ALL routes:
 app.use(function(req, res, next){
+    // res.locals = available in ALL our ejs templates
     res.locals.currentUser = req.user;
-    next();
+    res.locals.errorMsg = req.flash("error"); // flash message KEY
+    res.locals.successMsg = req.flash("success"); // flash message KEY
+    next(); // needed to move out of MIDDLEWARE
 });
 
+// associate routes with Express:
+app.use(indexRoutes);
+app.use("/sonytitles", titleRoutes); //adds "/sonytitles" prefix to routes (get, post)
+app.use(commentRoutes);
+//-----------------------------------------------------------------------------
+
+/*
 //------------------------ ROUTES --------------------------------------------
 app.get("/", function(req, res){
     res.render("landing.ejs");
@@ -165,7 +176,7 @@ app.get("/logout", function(req, res){
 
 //=============================================================================
 
-
+*/
 
 
 //------------------------- SERVER --------------------------------------------
