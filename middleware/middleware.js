@@ -1,9 +1,9 @@
-// our MIDDLEWARE functions ---------------------------------------------------
 var Title            = require("../models/title.js");
 var Comment          = require("../models/comment.js");
-var middlewareObject = {};
+var middlewareObject = {}; // will export and contain ALL our methods
+//-------------------------------------------------------------------
 
-
+// our MIDDLEWARE functions ---------------------------------------------------
 middlewareObject.isLoggedIn = function(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
