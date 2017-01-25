@@ -23,7 +23,7 @@ var commentRoutes = require("./routes/comments.js"),
 // exported through cli.        user and password removed for example
 //mongoose.connect("mongodb://<dbuser>:<dbpassword>@ds131109.mlab.com:31109/trevs-work-titles");
 var url = process.env.DATABASEURL || "mongodb://localhost/my_titles";
-console.log("-----> DATABASE_URL = " + process.env.DATABASE_URL);
+console.log("-----> DATABASE_URL = " + url);
 mongoose.connect(url);
 // Heroku env. var set at its website = Settings
 
