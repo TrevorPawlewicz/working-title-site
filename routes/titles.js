@@ -33,7 +33,7 @@ router.get("/", function(req, res){
         id: req.user._id,
         username: req.user.username
     };
-    //var creationDate = moment().format("MMMM Do YYYY, h:mm a");
+    var creationDate = moment().format("MMMM Do YYYY, h:mm a");
     //var cost = req.body.cost;
     //var rating = ;
 
@@ -41,9 +41,9 @@ router.get("/", function(req, res){
         name: name,
         image: image,
         description: desc,
-        author: author
+        author: author,
+        date: creationDate
         //cost: cost,
-        //date: creationDate
     };
 
     // create a new bar and save to the database:
@@ -70,7 +70,7 @@ router.get("/:id", function(req, res){
         if (err) {
             console.log(err);
         } else {
-            // render show template with that bar data:
+            // render show template with foundTitle passed in as 'title':
             res.render("titles/show.ejs", {title: foundTitle});
         }
     });
@@ -91,7 +91,8 @@ router.get("/:id/edit", middleware.checkTitleOwnership, function(req, res){
 
 // UPDATE by ID
 router.put("/:id", middleware.checkTitleOwnership, function(req, res){
-    Title.findByIdAndUpdate(req.params.id, req.body.bar, function(err, foundTitle){
+    //     mongoose method. req.body.title = name="title[name], [image], [description] from FORM"
+    Title.findByIdAndUpdate(req.params.id, req.body.title, function(err, foundTitle){
         if (err) {
             console.log(err);
             res.redirect("/titles");
@@ -104,6 +105,7 @@ router.put("/:id", middleware.checkTitleOwnership, function(req, res){
 
 // DESTROY by ID
 router.delete("/:id", middleware.checkTitleOwnership, function(req, res){
+    //     mongoose method
     Title.findByIdAndRemove(req.params.id, function(err){
         if (err) {
             console.log(err);

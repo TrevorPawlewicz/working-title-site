@@ -17,17 +17,17 @@ middlewareObject.isLoggedIn = function(req, res, next) {
 middlewareObject.checkTitleOwnership = function(req, res, next) {
     // is user logged in?
     if (req.isAuthenticated()) {
-        Bar.findById(req.params.id, function(err, foundBar){
+        Bar.findById(req.params.id, function(err, foundTitle){
             if (err) {
                 console.log(err);
-                req.flash("error", "Whaaaaa? Bar not Found!");
+                req.flash("error", "Whaaaaa? Title not Found!");
                 res.redirect("back"); // previous page
             } else {
                 // does user own bar post? compare:
-                console.log("foundBar.author.id = " + foundBar.author.id); // mongoose object
+                console.log("foundTitle.author.id = " + foundTitle.author.id); // mongoose object
                 console.log("req.user._id = " + req.user._id); // string
 
-                if (foundBar.author.id.equals(req.user._id)) {
+                if (foundTitle.author.id.equals(req.user._id)) {
                     next();
                 } else {
                     req.flash("error", "You Do Not Have Permission To Do That, Son!");
@@ -51,7 +51,7 @@ middlewareObject.checkCommentOwnership = function(req, res, next) {
                 req.flash("error", "Whaaaaa? Comment not Found!");
                 res.redirect("back"); // previous page
             } else {
-                // does user own bar post? compare:
+                // does user own title post? compare:
                 console.log(foundComment.author.id); // mongoose object
                 console.log(req.user._id); // string
 
@@ -72,4 +72,4 @@ middlewareObject.checkCommentOwnership = function(req, res, next) {
 
 // export the middleware function object:
 module.exports = middlewareObject;
-// our MIDDLEWARE functions ---------------------------------------------------
+//-----------------------------------------------------------------------------

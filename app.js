@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 //app.set("view engine", "ejs"); // only needed to leave .ejs from res.render
 // __dirname is the directory the app.js lives in
 app.use(express.static(__dirname + "/public")); //points Express to public folder
-app.use(methodOverride("_method"));
+app.use(methodOverride("_method")); //action="/titles/<%= title._id %>?_method=PUT" method="POST"
 app.use(flash());
 
 
