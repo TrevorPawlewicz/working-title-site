@@ -65,7 +65,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 
 // SHOW: info of bar by ID
 router.get("/:id", function(req, res){
-    // find bar witgh ID:
+    // find bar with ID:
     Title.findById(req.params.id).populate("comments").exec(function(err, foundTitle){
         if (err) {
             console.log(err);

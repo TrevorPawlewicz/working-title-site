@@ -1,8 +1,5 @@
 body {
-    /*font-family: 'Quicksand', sans-serif;*/
-    font-family: 'Varela Round', sans-serif;
-    /*font-family: 'Bangers', cursive;*/
-    /*font-family: 'Monoton', cursive;*/
+    font-family: 'Raleway', sans-serif;
     padding: 60px 0 0 0; /* for navbar-fixed-top */
 
     background: #BE93C5; /* fallback for old browsers */

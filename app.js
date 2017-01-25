@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // __dirname is the directory the app.js lives in
 app.use(express.static(__dirname + "/public")); //points Express to public folder
 app.use(methodOverride("_method")); //action="/titles/<%= title._id %>?_method=PUT" method="POST"
-app.use(flash());
+app.use(flash()); // use connect-flash
 
 
 
@@ -50,8 +50,8 @@ passport.deserializeUser(User.deserializeUser());     //passport-local-mongoose
 app.use(function(req, res, next){
     // res.locals = available in ALL our ejs templates
     res.locals.currentUser = req.user;
-    //res.locals.errorMsg = req.flash("error"); // flash message KEY
-    //res.locals.successMsg = req.flash("success"); // flash message KEY
+    res.locals.errorMsg = req.flash("error"); // flash message KEY
+    res.locals.successMsg = req.flash("success"); // flash message KEY
     next(); // needed to move out of MIDDLEWARE
 });
 //-----------------------------------------------------------------------------
