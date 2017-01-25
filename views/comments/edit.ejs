@@ -8,7 +8,7 @@
         <h1 class="h1-center">Edit Comment</h1>
 
         <div class="header-width-30">
-            <form action="/sonytitles/<%= title_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
+            <form action="/titles/<%= title_id %>/comments/<%= comment._id %>?_method=PUT" method="POST">
 
                 <div class="form-group">
                     <input class="form-control" type="text" name="comment[text]" value="<%= comment.text %>">
@@ -20,7 +20,7 @@
 
             </form>
 
-            <a href="/sonytitles">Go Back</a>
+            <a href="/titles">Go Back</a>
         </div>
 
     </div>

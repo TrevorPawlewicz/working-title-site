@@ -17,7 +17,7 @@ middlewareObject.isLoggedIn = function(req, res, next) {
 middlewareObject.checkTitleOwnership = function(req, res, next) {
     // is user logged in?
     if (req.isAuthenticated()) {
-        Bar.findById(req.params.id, function(err, foundTitle){
+        Title.findById(req.params.id, function(err, foundTitle){
             if (err) {
                 console.log(err);
                 req.flash("error", "Whaaaaa? Title not Found!");

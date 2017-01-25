@@ -8,7 +8,7 @@
         <h1 class="h1-center">Add new comment to <%= title.name %></h1>
 
         <div class="header-width-30">
-            <form action="/sonytitles/<%= title._id %>/comments" method="POST">
+            <form action="/titles/<%= title._id %>/comments" method="POST">
 
                 <div class="form-group">
                     <input class="form-control" type="text" name="comment[text]" placeholder="text">
@@ -20,7 +20,7 @@
 
             </form>
 
-            <a href="/sonytitles" class="btn btn-xs btn-warning">Go Back</a>
+            <a href="/titles" class="btn btn-xs btn-warning">Go Back</a>
         </div>
 
     </div>

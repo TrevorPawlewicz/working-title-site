@@ -3,14 +3,14 @@ var router     = express.Router({mergeParams: true}); //titles + comments get me
 var Title      = require("../models/title.js"); // import model module
 var Comment    = require("../models/comment.js"); // include the model schema
 var middleware = require("../middleware/middleware.js"); // include our MIDDLEWARE
-//var moment     = require("moment"); // for time & date display
+var moment     = require("moment"); // for time & date display
 
 // ============================================================================
 // COMMENT ROUTES
 //---------------
 // NEW (GET)                                  MIDDLEWARE
 router.get("/titles/:id/comments/new", middleware.isLoggedIn, function(req, res){
-    Bar.findById(req.params.id, function(err, title){
+    Title.findById(req.params.id, function(err, title){
         if (err) {
             console.log(err);
         } else {
@@ -34,8 +34,8 @@ router.post("/titles/:id/comments", middleware.isLoggedIn, function(req, res){
                     console.log(err);
                 } else {
                     // date created (with moment.js):
-                    //var commentDate = moment().format("MMMM Do YYYY, h:mm a");
-                    //comment.date = commentDate;
+                    var commentDate = moment().format("MMMM Do YYYY, h:mm a");
+                    comment.date = commentDate;
 
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
@@ -65,7 +65,6 @@ router.get("/titles/:id/comments/:comment_id/edit", middleware.checkCommentOwner
 
 // UPDATE comment
 router.put("/titles/:id/comments/:comment_id", middleware.checkCommentOwnership, function(req, res){
-
     Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
         if (err) {
             res.redirect("back");
