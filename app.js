@@ -1,7 +1,7 @@
-var express    = require('express');
-var app        = express();
-var bodyParser = require("body-parser"); // to get form data (req.body.name)
-var mongoose   = require("mongoose"); // object data mapper for MongoDB
+var express        = require('express');
+var app            = express();
+var bodyParser     = require("body-parser"); // to get form data (req.body.name)
+var mongoose       = require("mongoose"); // object data mapper for MongoDB
 var flash          = require("connect-flash"); // messages
 var passport       = require("passport"); // authentication
 var LocalStrategy  = require("passport-local"); // authentication
@@ -13,15 +13,20 @@ var Title     = require("./models/title.js"); // import model module
 var Comment   = require("./models/comment.js"); // import model module
 var User      = require("./models/user.js"); // import model module
 
-var seedDB = require("./seeds.js");
-//seedDB(); // to seed the database with starter info
-
 // ROUTES - require the files, then app.use them below
 var commentRoutes = require("./routes/comments.js"),
     titleRoutes   = require("./routes/titles.js"),
     indexRoutes   = require("./routes/index.js"); // AUTHENTICATION
+//-----------------------------------------------------------------------------
 
-mongoose.connect("mongodb://localhost/my_titles");
+//mongoose.connect("mongodb://localhost/my_titles"); // local DB
+// exported through cli.        user and password removed for example
+//mongoose.connect("mongodb://<dbuser>:<dbpassword>@ds131109.mlab.com:31109/trevs-work-titles");
+var url = process.env.DATABASEURL || "mongodb://localhost/my_titles";
+console.log("-----> DATABASE_URL = " + process.env.DATABASE_URL);
+mongoose.connect(url);
+// Heroku env. var set at its website = Settings
+
 app.use(bodyParser.urlencoded({extended: true}));
 //app.set("view engine", "ejs"); // only needed to leave .ejs from res.render
 
@@ -30,6 +35,11 @@ app.use(express.static(__dirname + "/public")); //points Express to public folde
 app.use(methodOverride("_method")); //action="/titles/<%= title._id %>?_method=PUT" method="POST"
 app.use(flash()); // use connect-flash
 
+
+// SEED dB for testing only --------------------------------------------------
+//var seedDB = require("./seeds.js");
+//seedDB(); // to seed the database with starter info
+//----------------------------------------------------------------------------
 
 
 // PASSPORT Config: -----------------------------------------------------------
@@ -56,6 +66,7 @@ app.use(function(req, res, next){
 });
 //-----------------------------------------------------------------------------
 
+
 // associate routes with Express: ---------------------------------------------
 app.use(indexRoutes);
 app.use("/titles", titleRoutes); //adds "/titles" prefix to routes (get, post)
@@ -64,9 +75,8 @@ app.use(commentRoutes);
 
 
 
-
 //------------------------- SERVER --------------------------------------------
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3000; // 3000 is local
 app.listen(port, process.env.IP, function() {
     console.log("Server is started on port: " + port);
 });
