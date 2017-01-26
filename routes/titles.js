@@ -8,14 +8,14 @@ var moment     = require("moment"); // for time & date display
 //var imageUpload = multer({dest: "./public/images/uploads"});
 
 
-// INDEX: show ALL bars
+// INDEX: show ALL titles
 router.get("/", function(req, res){
     // get all titles from database:
     Title.find({}, function(err, allTitlesFound){
         if (err) {
             console.log(err);
         } else {
-            //                       {name we give it: data passed in}
+            //                     {name we give it: data passed in}
             res.render("titles/index.ejs", { titles: allTitlesFound });
         }
     });
@@ -24,37 +24,42 @@ router.get("/", function(req, res){
 
 // CREATE:
  router.post("/", middleware.isLoggedIn, function(req, res){
-//router.post("/", middleware.isLoggedIn, upload.single("image") , function(req, res){
-    // get data from FORM: req.body
-    var name = req.body.name; // from new.ejs FORM "name"
-    var image = req.body.image; // from new.ejs FORM "image"
-    var desc = req.body.description; //from new.ejs FORM "description"
-    var author = {
-        id: req.user._id,
-        username: req.user.username
-    };
-    var creationDate = moment().format("MMMM Do YYYY, h:mm a");
-    //var cost = req.body.cost;
-    //var rating = ;
+    if (req.user.username === "trev") {
+        // get data from FORM: req.body
+        var name = req.body.name; // from new.ejs FORM "name"
+        var image = req.body.image; // from new.ejs FORM "image"
+        var desc = req.body.description; //from new.ejs FORM "description"
+        var author = {
+            id: req.user._id,
+            username: req.user.username
+        };
+        var creationDate = moment().format("MMMM Do YYYY, h:mm a");
+        //var cost = req.body.cost;
+        //var rating = ;
 
-    var newTitle = {
-        name: name,
-        image: image,
-        description: desc,
-        author: author,
-        date: creationDate
-        //cost: cost,
-    };
+        var newTitle = {
+            name: name,
+            image: image,
+            description: desc,
+            author: author,
+            date: creationDate
+            //cost: cost,
+        };
 
-    // create a new bar and save to the database:
-    Title.create(newTitle, function(err, newlyCreated){
-        console.log("newlyCreated = " + newlyCreated);
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect("/titles"); // to GET '/bars' route
-        }
-    });
+        // create a new bar and save to the database:
+        Title.create(newTitle, function(err, newlyCreated){
+            console.log("newlyCreated = " + newlyCreated);
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect("/titles"); // to GET '/bars' route
+            }
+        });
+
+    } else {
+        req.flash("error", "You need permission to do that!");
+        res.redirect("/titles");
+    }
 }); //-------------------------------------------------------------------------
 
 

@@ -6,6 +6,7 @@ var middlewareObject = {}; // will export and contain ALL our methods
 // our MIDDLEWARE functions ---------------------------------------------------
 middlewareObject.isLoggedIn = function(req, res, next) {
     if (req.isAuthenticated()) {
+        console.log("isLoggedIn");
         return next();
     }
     //  flash( key,      value) to be passed
